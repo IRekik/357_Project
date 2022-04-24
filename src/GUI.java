@@ -23,6 +23,8 @@ public class GUI {
 
     static int difficulty = 0;
     static boolean learning = true;
+    MP3FileManager am = new MP3FileManager();
+    MediaPlayer player = new MediaPlayer();
 
     private JButton createButton(String s) {
         JButton button = new JButton(s);
@@ -310,22 +312,30 @@ public class GUI {
         MusicalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         ArrayList<JButton> NoteList = new ArrayList<JButton>();
-        if(learning == true) {
-            JButton note1 = createButton("Note1");
-            JButton note2 = createButton("Note2");
-            JButton note3 = createButton("Note3");
-            JButton note4 = createButton("Note4");
-            JButton note5 = createButton("Note5");
-            JButton note6 = createButton("Note6");
-            JButton note7 = createButton("Note7");
-            JButton note8 = createButton("Note8");
-            JButton note9 = createButton("Note9");
-            JButton note10 = createButton("Note10");
-            JButton note11 = createButton("Note11");
-            JButton note12 = createButton("Note12");
+        if(learning) {
+            JButton note1 = createButton("A");
+            JButton note2 = createButton("A#");
+            JButton note3 = createButton("B");
+            JButton note4 = createButton("C");
+            JButton note5 = createButton("C#");
+            JButton note6 = createButton("D");
+            JButton note7 = createButton("D#");
+            JButton note8 = createButton("E");
+            JButton note9 = createButton("F");
+            JButton note10 = createButton("F#");
+            JButton note11 = createButton("G");
+            JButton note12 = createButton("G#");
             NoteList.add(note1);NoteList.add(note2);NoteList.add(note3);NoteList.add(note4);
             NoteList.add(note5);NoteList.add(note6);NoteList.add(note7);NoteList.add(note8);
             NoteList.add(note9);NoteList.add(note10);NoteList.add(note11);NoteList.add(note12);
+            for (int i = 0; i < NoteList.size(); i++) {
+                int finalI = i;
+                NoteList.get(i).addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        player.play(NoteList.get(finalI).getText());
+                    }
+                });
+            }
         }
         else {
             JButton note1 = createButton("Note");
@@ -396,11 +406,6 @@ public class GUI {
                 System.out.println("Bye");
             }
         });
-
-    }
-
-    public static void main(String[] args) {
-        new GUI();
 
     }
 

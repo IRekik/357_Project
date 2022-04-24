@@ -8,8 +8,7 @@ public class MediaPlayer {
     private Player player;
 
 
-    public MediaPlayer(File f) {
-        this.f = f;
+    public MediaPlayer() {
     }
 
     public void setFilename (String name) {
@@ -18,7 +17,9 @@ public class MediaPlayer {
     }
 
 
-    public void play() {
+    public void play(String name) {
+        File f = new File(name+".mp3");
+        this.f = f;
         try {
             BufferedInputStream buffer = new BufferedInputStream(new FileInputStream(f));
             player = new Player(buffer);
