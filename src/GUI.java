@@ -1,30 +1,47 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
-import java.util.Scanner;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 public class GUI {
 
+    MP3FileManager am = new MP3FileManager();
+    MediaPlayer player = new MediaPlayer();
 
     static int difficulty = 0;
     static boolean learning = true;
-    MP3FileManager am = new MP3FileManager();
-    MediaPlayer player = new MediaPlayer();
+    static String answer1 = "";
+    static String answer2 = "";
+    static String answer3 = "";
+    static String answer4 = "";
+    static String answer5 = "";
+    static String answer6 = "";
+    static String answer7 = "";
+    static String answer8 = "";
+    static int correct =0;
+    private void resetAnswers() {
+        answer1 = "";
+        answer2 = "";
+        answer3 = "";
+        answer4 = "";
+        answer5 = "";
+        answer6 = "";
+        answer7 = "";
+        answer8 = "";
+        correct = 0;
+    }
 
     private JButton createButton(String s) {
         JButton button = new JButton(s);
@@ -83,8 +100,6 @@ public class GUI {
                 frame.dispose();
                 setDifficulty(2);
                 MusicalTraining();
-
-                System.out.println("Mediumest");
             }
         });
 
@@ -93,22 +108,18 @@ public class GUI {
                 frame.dispose();
                 setDifficulty(3);
                 MusicalTraining();
-
-                System.out.println("Hardest");
             }
         });
 
         option1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setLearning(true);
-                System.out.println("Learning Time");
             }
         });
 
         option2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setLearning(false);
-                System.out.println("Challenge Time");
             }
         });
 
@@ -122,9 +133,6 @@ public class GUI {
         panel.add(option2);
 
         frame.add(panel, BorderLayout.CENTER);
-
-
-
     }
 
     public int[] get4Numbers() {
@@ -304,6 +312,98 @@ public class GUI {
 
     }
 
+    public boolean right(String s, JButton b) {
+        if (s.equals(b.getName())) {
+            correct++;
+            return true;
+        }
+        return false;
+    }
+
+    public int[] order(int n) {
+        int[] arr = null;
+        if(n==1) {
+            arr = new int[4];
+            ArrayList<Integer> list = new ArrayList<Integer>();
+            for (int i=0; i<4; i++) {
+                list.add(i);
+            }
+            Collections.shuffle(list);
+            for (int i=0; i<list.size(); i++) {
+                arr[i]=list.get(i);
+            }
+
+        }
+        else if(n==2) {
+            arr = new int[6];
+            ArrayList<Integer> list = new ArrayList<Integer>();
+            for (int i=0; i<6; i++) {
+                list.add(i);
+            }
+            Collections.shuffle(list);
+            for (int i=0; i<6; i++) {
+                arr[i]=list.get(i);
+            }
+        }
+        else if(n==3) {
+            arr = new int[8];
+            ArrayList<Integer> list = new ArrayList<Integer>();
+            for (int i=0; i<8; i++) {
+                list.add(i);
+            }
+            Collections.shuffle(list);
+            for (int i=0; i<list.size(); i++) {
+                arr[i]=list.get(i);
+            }
+        }
+        return arr;
+    }
+
+    public int Xvalue(int n, int m) {
+        int x = 0;
+        if(n==1) {
+            if (m==0) {x=100;}
+            else if (m==1) {x=400;}
+            else if (m==2) {x=100;}
+            else if (m==3) {x=400;}
+        }
+        else if(n==2) {
+            if (m==0) {x=70;}
+            else if (m==1) {x=255;}
+            else if (m==2) {x=435;}
+            else if (m==3) {x=70;}
+            else if (m==4) {x=255;}
+            else if (m==5) {x=435;}
+        }
+        else if(n==3) {
+            if (m==0) {x=40;}
+            else if (m==1) {x=180;}
+            else if (m==2) {x=320;}
+            else if (m==3) {x=460;}
+            else if (m==4) {x=40;}
+            else if (m==5) {x=180;}
+            else if (m==6) {x=320;}
+            else if (m==7) {x=460;}
+        }
+        return x;
+    }
+
+    public int Yvalue(int n, int m) {
+        int x = 0;
+        if(n==1) {
+            if (m==0 || m==1) {x=20;}
+            else if (m==2 || m==3) {x=140;}
+        }
+        else if(n==2) {
+            if (m==0 || m==1 || m==2) {x=20;}
+            else if (m==3 || m==4 ||m==5) {x=140;}
+        }
+        else if(n==3) {
+            if (m==0 || m==1 || m==2 || m==3) {x=20;}
+            else if (m==4 || m==5 || m==6 || m==7) {x=140;}
+        }
+        return x;
+    }
     public void MusicalTraining() {
         JFrame MusicalFrame = new JFrame();
         JPanel MusicalPanel = new JPanel();
@@ -312,19 +412,19 @@ public class GUI {
         MusicalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         ArrayList<JButton> NoteList = new ArrayList<JButton>();
-        if(learning) {
-            JButton note1 = createButton("A");
-            JButton note2 = createButton("A#");
-            JButton note3 = createButton("B");
-            JButton note4 = createButton("C");
-            JButton note5 = createButton("C#");
-            JButton note6 = createButton("D");
-            JButton note7 = createButton("D#");
-            JButton note8 = createButton("E");
-            JButton note9 = createButton("F");
-            JButton note10 = createButton("F#");
-            JButton note11 = createButton("G");
-            JButton note12 = createButton("G#");
+        if(learning == true) {
+            JButton note1 = createButton("A"); 	note1.setName("A");
+            JButton note2 = createButton("A#"); note2.setName("A#");
+            JButton note3 = createButton("B"); note3.setName("B");
+            JButton note4 = createButton("C"); note4.setName("C");
+            JButton note5 = createButton("C#"); note5.setName("C#");
+            JButton note6 = createButton("D"); note6.setName("D");
+            JButton note7 = createButton("D#"); note7.setName("D#");
+            JButton note8 = createButton("E"); note8.setName("E");
+            JButton note9 = createButton("F"); note9.setName("F");
+            JButton note10 = createButton("F#"); note10.setName("F#");
+            JButton note11 = createButton("G"); note11.setName("G");
+            JButton note12 = createButton("G#"); note12.setName("G#");
             NoteList.add(note1);NoteList.add(note2);NoteList.add(note3);NoteList.add(note4);
             NoteList.add(note5);NoteList.add(note6);NoteList.add(note7);NoteList.add(note8);
             NoteList.add(note9);NoteList.add(note10);NoteList.add(note11);NoteList.add(note12);
@@ -332,81 +432,204 @@ public class GUI {
                 int finalI = i;
                 NoteList.get(i).addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        player.play(NoteList.get(finalI).getText());
+                        player.play(NoteList.get(finalI).getName());
                     }
                 });
             }
         }
         else {
-            JButton note1 = createButton("Note");
-            JButton note2 = createButton("Note");
-            JButton note3 = createButton("Note");
-            JButton note4 = createButton("Note");
-            JButton note5 = createButton("Note");
-            JButton note6 = createButton("Note");
-            JButton note7 = createButton("Note");
-            JButton note8 = createButton("Note");
-            JButton note9 = createButton("Note");
-            JButton note10 = createButton("Note");
-            JButton note11 = createButton("Note");
-            JButton note12 = createButton("Note");
+            JButton note1 = createButton("?"); note1.setName("A");
+            JButton note2 = createButton("?"); note2.setName("A#");
+            JButton note3 = createButton("?"); note3.setName("B");
+            JButton note4 = createButton("?"); note4.setName("C");
+            JButton note5 = createButton("?"); note5.setName("C#");
+            JButton note6 = createButton("?"); note6.setName("D");
+            JButton note7 = createButton("?"); note7.setName("D#");
+            JButton note8 = createButton("?"); note8.setName("E");
+            JButton note9 = createButton("?"); note9.setName("F");
+            JButton note10 = createButton("?"); note10.setName("F#");
+            JButton note11 = createButton("?"); note11.setName("G");
+            JButton note12 = createButton("?"); note12.setName("G#");
             NoteList.add(note1);NoteList.add(note2);NoteList.add(note3);NoteList.add(note4);
             NoteList.add(note5);NoteList.add(note6);NoteList.add(note7);NoteList.add(note8);
             NoteList.add(note9);NoteList.add(note10);NoteList.add(note11);NoteList.add(note12);
+            for (int i = 0; i < NoteList.size(); i++) {
+                int finalI = i;
+                NoteList.get(i).addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        player.play(NoteList.get(finalI).getName());
+                    }
+                });
+            }
         }
 
-        if(GUI.difficulty == 1) {
-            int[] arr = get4Numbers();
-            MusicalFrame.setSize(600,350);
-            back = createButton("Back");	back.setBounds(230, 250, 130, 50);	back.setFocusable(false);
+        JTextField tf1 = new JTextField();JTextField tf2 = new JTextField(); JTextField tf3 = new JTextField();JTextField tf4 = new JTextField();
+        JTextField tf5 = new JTextField(); JTextField tf6 = new JTextField(); JTextField tf7 = new JTextField(); JTextField tf8 = new JTextField();
+        JButton submit = createButton("Submit");	submit.setBounds(450, 250, 130, 50);	submit.setFocusable(false); MusicalPanel.add(submit);
+        JButton next = createButton("Practice");	next.setBounds(450, 250, 130, 50);	next.setFocusable(false); MusicalPanel.add(next);
+        JLabel Score =new JLabel();
+        int[] arr = get8Numbers();
+        JButton b1 = NoteList.get(arr[0]); JButton b2 = NoteList.get(arr[1]); JButton b3 = NoteList.get(arr[2]); JButton b4 = NoteList.get(arr[3]);
+        JButton b5 = NoteList.get(arr[4]); JButton b6 = NoteList.get(arr[5]); JButton b7 = NoteList.get(arr[6]); JButton b8 = NoteList.get(arr[7]);
+        MusicalFrame.setSize(600,350);
+        back = createButton("Back");	back.setBounds(230, 250, 130, 50);	back.setFocusable(false);
 
-            JButton b1 = NoteList.get(arr[0]); JButton b2 = NoteList.get(arr[1]); JButton b3 = NoteList.get(arr[2]); JButton b4 = NoteList.get(arr[3]);
+        submit.setVisible(false);
+        next.setVisible(false);
+
+        if(learning) {next.setVisible(true);} else {submit.setVisible(true);}
+        //DIFFICULTY : EASY
+        if(GUI.difficulty == 1) {
             b1.setBounds(100, 20, 75, 50); b2.setBounds(400, 20, 75, 50);
             b3.setBounds(100, 140, 75, 50); b4.setBounds(400, 140, 75, 50);
             MusicalPanel.add(b1);MusicalPanel.add(b2);MusicalPanel.add(b3);MusicalPanel.add(b4);
-        }
-        else if (GUI.difficulty == 2) {
-            int[] arr = get6Numbers();
-            MusicalFrame.setSize(600,350);
-            back = createButton("Back");	back.setBounds(230, 250, 130, 50);	back.setFocusable(false);
+            if (!learning) {
 
-            JButton b1 = NoteList.get(arr[0]); JButton b2 = NoteList.get(arr[1]); JButton b3 = NoteList.get(arr[2]);
-            JButton b4 = NoteList.get(arr[3]); JButton b5 = NoteList.get(arr[4]); JButton b6 = NoteList.get(arr[5]);
+                tf1.setBounds(100, 75, 75, 25); tf2.setBounds(400, 75, 75, 25);
+                tf3.setBounds(100, 195, 75, 25); tf4.setBounds(400, 195, 75, 25);
+                MusicalPanel.add(tf1);MusicalPanel.add(tf2);MusicalPanel.add(tf3);MusicalPanel.add(tf4);}
+        }
+        //DIFFICULTY : MEDIUM
+        else if (GUI.difficulty == 2) {
             b1.setBounds(70, 20, 75, 50); b2.setBounds(255, 20, 75, 50); b3.setBounds(435, 20, 75, 50);
             b4.setBounds(70, 140, 75, 50);b5.setBounds(255, 140, 75, 50); b6.setBounds(435, 140, 75, 50);
             MusicalPanel.add(b1);MusicalPanel.add(b2);MusicalPanel.add(b3);MusicalPanel.add(b4);MusicalPanel.add(b5);MusicalPanel.add(b6);
+            if (!learning) {
+                tf1.setBounds(70, 75, 75, 25); tf2.setBounds(255, 75, 75, 25);  tf3.setBounds(435, 75, 75, 25);
+                tf4.setBounds(70, 195, 75, 25); tf5.setBounds(255, 195, 75, 25);  tf6.setBounds(435, 195, 75, 25);
+                MusicalPanel.add(tf1);MusicalPanel.add(tf2);MusicalPanel.add(tf3);MusicalPanel.add(tf4);MusicalPanel.add(tf5);MusicalPanel.add(tf6);}
         }
+        //DIFFICULTY : HARD
         else if (GUI.difficulty == 3) {
-            int[] arr = get8Numbers();
-            MusicalFrame.setSize(600,350);
-            back = createButton("Back");	back.setBounds(230, 250, 130, 50);	back.setFocusable(false);
-
-            JButton b1 = NoteList.get(arr[0]); JButton b2 = NoteList.get(arr[1]); JButton b3 = NoteList.get(arr[2]); JButton b4 = NoteList.get(arr[3]);
-            JButton b5 = NoteList.get(arr[4]); JButton b6 = NoteList.get(arr[5]); JButton b7 = NoteList.get(arr[6]); JButton b8 = NoteList.get(arr[7]);
             b1.setBounds(40, 20, 75, 50); b2.setBounds(180, 20, 75, 50); b3.setBounds(320, 20, 75, 50); b4.setBounds(460, 20, 75, 50);
             b5.setBounds(40, 140, 75, 50); b6.setBounds(180, 140, 75, 50); b7.setBounds(320, 140, 75, 50); b8.setBounds(460, 140, 75, 50);
             MusicalPanel.add(b1);MusicalPanel.add(b2);MusicalPanel.add(b3);MusicalPanel.add(b4);MusicalPanel.add(b5);MusicalPanel.add(b6);MusicalPanel.add(b7);MusicalPanel.add(b8);
+            if (!learning) {
+                tf1.setBounds(40, 75, 75, 25); tf2.setBounds(180, 75, 75, 25);  tf3.setBounds(320, 75, 75, 25); tf4.setBounds(460, 75, 75, 25);
+                tf5.setBounds(40, 195, 75, 25);  tf6.setBounds(180, 195, 75, 25); tf7.setBounds(320, 195, 75, 25);  tf8.setBounds(460, 195, 75, 25);
+                MusicalPanel.add(tf1);MusicalPanel.add(tf2);MusicalPanel.add(tf3);MusicalPanel.add(tf4);
+                MusicalPanel.add(tf5);MusicalPanel.add(tf6);MusicalPanel.add(tf7);MusicalPanel.add(tf8);}
         }
+
+        next.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                next.setVisible(false);
+                submit.setVisible(true);
+                if(GUI.difficulty == 1) {
+                    b1.setText("?");b2.setText("?");b3.setText("?");b4.setText("?");
+                    int[] arr = order(1);
+                    for(int i=0;i<arr.length;i++) {
+                        int x = Xvalue(1,arr[i]);
+                        int y = Yvalue(1,arr[i]);
+                        if(i==0) {b1.setBounds(x, y, 75, 50); tf1.setBounds(x, y+55, 75, 25);}
+                        else if(i==1){b2.setBounds(x, y, 75, 50); tf2.setBounds(x, y+55, 75, 25); }
+                        else if(i==2){b3.setBounds(x, y, 75, 50); tf3.setBounds(x, y+55, 75, 25);}
+                        else if(i==3){b4.setBounds(x, y, 75, 50); tf4.setBounds(x, y+55, 75, 25);}
+                    }
+                    MusicalPanel.add(tf1);MusicalPanel.add(tf2);MusicalPanel.add(tf3);MusicalPanel.add(tf4);
+                }
+                else if (GUI.difficulty == 2) {
+                    b1.setText("?");b2.setText("?");b3.setText("?");b4.setText("?");b5.setText("?");b6.setText("?");
+                    int[] arr = order(2);
+                    for(int i=0;i<arr.length;i++) {
+                        int x = Xvalue(2,arr[i]);
+                        int y = Yvalue(2,arr[i]);
+                        if(i==0) {b1.setBounds(x, y, 75, 50);tf1.setBounds(x, y+55, 75, 25);}
+                        else if(i==1){b2.setBounds(x, y, 75, 50);tf2.setBounds(x, y+55, 75, 25);}
+                        else if(i==2){b3.setBounds(x, y, 75, 50);tf3.setBounds(x, y+55, 75, 25);}
+                        else if(i==3){b4.setBounds(x, y, 75, 50);tf4.setBounds(x, y+55, 75, 25);}
+                        else if(i==4){b5.setBounds(x, y, 75, 50);tf5.setBounds(x, y+55, 75, 25);}
+                        else if(i==5){b6.setBounds(x, y, 75, 50);tf6.setBounds(x, y+55, 75, 25);}
+                    }
+                    MusicalPanel.add(tf1);MusicalPanel.add(tf2);MusicalPanel.add(tf3);MusicalPanel.add(tf4);MusicalPanel.add(tf5);MusicalPanel.add(tf6);
+                }
+                else if (GUI.difficulty == 3) {
+                    b1.setText("?");b2.setText("?");b3.setText("?");b4.setText("?");b5.setText("?");b6.setText("?");b7.setText("?");b8.setText("?");
+                    int[] arr = order(3);
+                    for(int i=0;i<arr.length;i++) {
+                        int x = Xvalue(3,arr[i]);
+                        int y = Yvalue(3,arr[i]);
+                        if(i==0) {b1.setBounds(x, y, 75, 50);tf1.setBounds(x, y+55, 75, 25);}
+                        else if(i==1){b2.setBounds(x, y, 75, 50);tf2.setBounds(x, y+55, 75, 25);}
+                        else if(i==2){b3.setBounds(x, y, 75, 50);tf3.setBounds(x, y+55, 75, 25);}
+                        else if(i==3){b4.setBounds(x, y, 75, 50);tf4.setBounds(x, y+55, 75, 25);}
+                        else if(i==4){b5.setBounds(x, y, 75, 50);tf5.setBounds(x, y+55, 75, 25);}
+                        else if(i==5){b6.setBounds(x, y, 75, 50);tf6.setBounds(x, y+55, 75, 25);}
+                        else if(i==6){b7.setBounds(x, y, 75, 50);tf7.setBounds(x, y+55, 75, 25);}
+                        else if(i==7){b8.setBounds(x, y, 75, 50);tf8.setBounds(x, y+55, 75, 25);}
+                    }
+                    MusicalPanel.add(tf1);MusicalPanel.add(tf2);MusicalPanel.add(tf3);MusicalPanel.add(tf4);
+                    MusicalPanel.add(tf5);MusicalPanel.add(tf6);MusicalPanel.add(tf7);MusicalPanel.add(tf8);
+                }
+            }
+
+        });
+
+        //SUBMIT BUTTON ACTION
+        submit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                tf1.setVisible(false);tf2.setVisible(false);tf3.setVisible(false);tf4.setVisible(false);tf5.setVisible(false);tf6.setVisible(false);tf7.setVisible(false);tf8.setVisible(false);
+                answer1 = tf1.getText();
+                if(right(answer1,b1)) {	b1.setForeground(Color.GREEN);} else {b1.setForeground(Color.RED);}
+                b1.setText(b1.getName());
+                answer2 = tf2.getText();
+                if(right(answer2,b2)) {	b2.setForeground(Color.GREEN);} else {b2.setForeground(Color.RED);}
+                b2.setText(b2.getName());
+                answer3 = tf3.getText();
+                if(right(answer3,b3)) {	b3.setForeground(Color.GREEN);} else {b3.setForeground(Color.RED);}
+                b3.setText(b3.getName());
+                answer4 = tf4.getText();
+                if(right(answer4,b4)) {	b4.setForeground(Color.GREEN);} else {b4.setForeground(Color.RED);}
+                b4.setText(b4.getName());
+                answer5 = tf5.getText();
+                if(right(answer5,b5)) {	b5.setForeground(Color.GREEN);} else {b5.setForeground(Color.RED);}
+                b5.setText(b5.getName());
+                answer6 = tf6.getText();
+                if(right(answer6,b6)) {	b6.setForeground(Color.GREEN);} else {b6.setForeground(Color.RED);}
+                b6.setText(b6.getName());
+                submit.setVisible(false);
+                answer7 = tf7.getText();
+                if(right(answer7,b7)) {	b7.setForeground(Color.GREEN);} else {b7.setForeground(Color.RED);}
+                b7.setText(b7.getName());
+                answer8 = tf8.getText();
+                if(right(answer8,b8)) {	b8.setForeground(Color.GREEN);} else {b8.setForeground(Color.RED);}
+                b8.setText(b8.getName());
+                submit.setVisible(false);
+                //SHOWING FINAL SCORE
+                if(difficulty==1) {
+                    Score.setText("Correct : " + correct + "/4");
+                    if(correct!=4) {Score.setForeground(Color.RED);} else {Score.setForeground(Color.GREEN);}
+                }
+                else if (difficulty==2) {
+                    Score.setText("Correct : " + correct + "/6");
+                    if(correct!=6) {Score.setForeground(Color.RED);} else {Score.setForeground(Color.GREEN);}
+                }
+                else if (difficulty==3) {
+                    Score.setText("Correct : " + correct + "/8");
+                    if(correct!=8) {Score.setForeground(Color.RED);} else {Score.setForeground(Color.GREEN);}
+                }
+                Score.setFont(new Font("Verdana",1,30));
+                Score.setBounds(165, 0, 400, 200);
+                MusicalPanel.add(Score);
+                resetAnswers();
+            }
+        });
+
+
+
         MusicalFrame.setLocationRelativeTo(null);
         MusicalFrame.setVisible(true);
         MusicalPanel.setLayout(null);
-
-
-
-
         MusicalPanel.add(back);
-
         MusicalFrame.add(MusicalPanel, BorderLayout.CENTER);
 
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 MusicalFrame.dispose();
+                learning = true;
                 new GUI();
-                System.out.println("Bye");
             }
         });
 
     }
-
 }

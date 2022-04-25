@@ -20,18 +20,19 @@ public class MP3FileManager {
     File Gs_File;
 
     public MP3FileManager() {
-        File A_File = new File("A.mp3");
-        File As_File = new File("A#.mp3");
-        File B_File = new File("B.mp3");
-        File C_File = new File("C.mp3");
-        File Cs_ile = new File("C#.mp3");
-        File D_File = new File("D.mp3");
-        File Ds_File = new File("D#.mp3");
-        File E_File = new File("E.mp3");
-        File F_File = new File("F.mp3");
-        File Fs_File = new File("F#.mp3");
-        File G_File = new File("G.mp3");
-        File Gs_File = new File("G#.mp3");
+        File A_File = new File("resources/A.mp3");
+        File As_File = new File("resources/A#.mp3");
+        File B_File = new File("resources/B.mp3");
+        File C_File = new File("resources/C.mp3");
+        File Cs_ile = new File("resources/C#.mp3");
+        File D_File = new File("resources/D.mp3");
+        File Ds_File = new File("resources/D#.mp3");
+        File E_File = new File("resources/E.mp3");
+        File F_File = new File("resources/F.mp3");
+        File Fs_File = new File("resources/F#.mp3");
+        File G_File = new File("resources/G.mp3");
+        File Gs_File = new File("resources/G#.mp3");
+
         audioMap = new HashMap();
         audioMap.put("A", A_File);
         audioMap.put("A#", As_File);
