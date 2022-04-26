@@ -5,7 +5,8 @@ import java.util.Random;
 
 public class MP3FileManager {
     public Map<String, File> audioMap;
-
+    
+    //Create file variables
     File A_File;
     File As_File;
     File B_File;
@@ -18,7 +19,8 @@ public class MP3FileManager {
     File Fs_File;
     File G_File;
     File Gs_File;
-
+    
+    //Initializing them to the mp3 samples
     public MP3FileManager() {
         File A_File = new File("resources/A.mp3");
         File As_File = new File("resources/A#.mp3");
@@ -32,7 +34,8 @@ public class MP3FileManager {
         File Fs_File = new File("resources/F#.mp3");
         File G_File = new File("resources/G.mp3");
         File Gs_File = new File("resources/G#.mp3");
-
+        
+        //Making a hash map and linking each file to a note name. The A file makes the A note sound
         audioMap = new HashMap();
         audioMap.put("A", A_File);
         audioMap.put("A#", As_File);
@@ -47,7 +50,7 @@ public class MP3FileManager {
         audioMap.put("G", G_File);
         audioMap.put("G#", Gs_File);
     }
-
+    //As the method name suggests, we generate a random sound from the sample
     public File getRandomNote() {
         File ret;
         Random rand = new Random();
